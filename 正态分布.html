@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 正态分布 | R编程与心理统计</title>
+  <meta name="description" content="本书是一本关于如何使用R语言进行心理学数据分析的工具书，适合作为本科生、研究生学习R语言进行统计分析的教材，以及心理学的研究者作为数据分析参考书。" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 正态分布 | R编程与心理统计" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="本书是一本关于如何使用R语言进行心理学数据分析的工具书，适合作为本科生、研究生学习R语言进行统计分析的教材，以及心理学的研究者作为数据分析参考书。" />
+  <meta name="github-repo" content="rstudio/rpaps" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 正态分布 | R编程与心理统计" />
+  
+  <meta name="twitter:description" content="本书是一本关于如何使用R语言进行心理学数据分析的工具书，适合作为本科生、研究生学习R语言进行统计分析的教材，以及心理学的研究者作为数据分析参考书。" />
+  
+
+<meta name="author" content="史更虎" />
+
+
+<meta name="date" content="2023-09-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="认识数据.html"/>
+<link rel="next" href="final-words.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R编程与心理统计</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> R编程环境的搭建</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#r是啥"><i class="fa fa-check"></i><b>1.1</b> R是啥？</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r编程环境r语言在哪儿写程序"><i class="fa fa-check"></i><b>1.2</b> R编程环境：R语言在哪儿写程序？</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#第一步先装上r"><i class="fa fa-check"></i><b>1.2.1</b> 第一步：先装上R</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#rgui都可以干啥"><i class="fa fa-check"></i><b>1.2.2</b> RGUI都可以干啥？</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#更好的选择rstudio"><i class="fa fa-check"></i><b>1.2.3</b> 更好的选择：RStudio</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#还有其他的r的开发环境吗"><i class="fa fa-check"></i><b>1.2.4</b> 还有其他的R的开发环境吗？</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html"><i class="fa fa-check"></i><b>2</b> R的数据类型和相关计算</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#基本数据类型"><i class="fa fa-check"></i><b>2.1</b> 基本数据类型</a></li>
+<li class="chapter" data-level="2.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#变量variables"><i class="fa fa-check"></i><b>2.2</b> 变量（Variables）</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#变量的赋值"><i class="fa fa-check"></i><b>2.2.1</b> 变量的赋值</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#变量命名如何给变量取名字"><i class="fa fa-check"></i><b>2.2.2</b> 变量命名：如何给变量取名字</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#算术运算"><i class="fa fa-check"></i><b>2.3</b> 算术运算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#变量在算术运算中的使用"><i class="fa fa-check"></i><b>2.3.1</b> 变量在算术运算中的使用</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#逻辑表达式和逻辑运算"><i class="fa fa-check"></i><b>2.4</b> 逻辑表达式和逻辑运算</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#逻辑表达式的应用"><i class="fa fa-check"></i><b>2.4.1</b> 逻辑表达式的应用</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#和"><i class="fa fa-check"></i><b>2.4.2</b> &amp;&amp;和||</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#向量vector"><i class="fa fa-check"></i><b>2.5</b> 向量（Vector）</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#向量是什么"><i class="fa fa-check"></i><b>2.5.1</b> 向量是什么？</a></li>
+<li class="chapter" data-level="2.5.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#r的向量"><i class="fa fa-check"></i><b>2.5.2</b> R的向量</a></li>
+<li class="chapter" data-level="2.5.3" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#通过下标访问向量中的元素"><i class="fa fa-check"></i><b>2.5.3</b> 通过下标访问向量中的元素</a></li>
+<li class="chapter" data-level="2.5.4" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#向量的运算"><i class="fa fa-check"></i><b>2.5.4</b> 向量的运算</a></li>
+<li class="chapter" data-level="2.5.5" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#向量函数function"><i class="fa fa-check"></i><b>2.5.5</b> 向量函数（function）</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#数组与矩阵"><i class="fa fa-check"></i><b>2.6</b> 数组与矩阵</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#数组array"><i class="fa fa-check"></i><b>2.6.1</b> 数组（array）</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#矩阵matrix"><i class="fa fa-check"></i><b>2.6.2</b> 矩阵(Matrix)</a></li>
+<li class="chapter" data-level="2.6.3" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#矩阵运算"><i class="fa fa-check"></i><b>2.6.3</b> 矩阵运算</a></li>
+<li class="chapter" data-level="2.6.4" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#矩阵函数"><i class="fa fa-check"></i><b>2.6.4</b> 矩阵函数</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="数据可视化.html"><a href="数据可视化.html"><i class="fa fa-check"></i><b>3</b> 数据可视化</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="数据可视化.html"><a href="数据可视化.html#饼状图"><i class="fa fa-check"></i><b>3.1</b> 饼状图</a></li>
+<li class="chapter" data-level="3.2" data-path="数据可视化.html"><a href="数据可视化.html#条形图bar-chart"><i class="fa fa-check"></i><b>3.2</b> 条形图（bar chart）</a></li>
+<li class="chapter" data-level="3.3" data-path="数据可视化.html"><a href="数据可视化.html#柱状图histogram"><i class="fa fa-check"></i><b>3.3</b> 柱状图（histogram）</a></li>
+<li class="chapter" data-level="3.4" data-path="数据可视化.html"><a href="数据可视化.html#箱形图"><i class="fa fa-check"></i><b>3.4</b> 箱形图</a></li>
+<li class="chapter" data-level="3.5" data-path="数据可视化.html"><a href="数据可视化.html#线形图"><i class="fa fa-check"></i><b>3.5</b> 线形图</a></li>
+<li class="chapter" data-level="3.6" data-path="数据可视化.html"><a href="数据可视化.html#散点图"><i class="fa fa-check"></i><b>3.6</b> 散点图</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="认识数据.html"><a href="认识数据.html"><i class="fa fa-check"></i><b>4</b> 认识数据</a></li>
+<li class="chapter" data-level="5" data-path="正态分布.html"><a href="正态分布.html"><i class="fa fa-check"></i><b>5</b> 正态分布</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="正态分布.html"><a href="正态分布.html#z分数"><i class="fa fa-check"></i><b>5.1</b> Z分数</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="正态分布.html"><a href="正态分布.html#z分数的特性"><i class="fa fa-check"></i><b>5.1.1</b> Z分数的特性</a></li>
+<li class="chapter" data-level="5.1.2" data-path="正态分布.html"><a href="正态分布.html#z分数的缺陷"><i class="fa fa-check"></i><b>5.1.2</b> Z分数的缺陷</a></li>
+<li class="chapter" data-level="5.1.3" data-path="正态分布.html"><a href="正态分布.html#计算z分数"><i class="fa fa-check"></i><b>5.1.3</b> 计算Z分数</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="正态分布.html"><a href="正态分布.html#正态分布normal-distribution"><i class="fa fa-check"></i><b>5.2</b> 正态分布（Normal Distribution）</a></li>
+<li class="chapter" data-level="5.3" data-path="正态分布.html"><a href="正态分布.html#标准正态分布"><i class="fa fa-check"></i><b>5.3</b> 标准正态分布</a></li>
+<li class="chapter" data-level="5.4" data-path="正态分布.html"><a href="正态分布.html#概率与分布模拟"><i class="fa fa-check"></i><b>5.4</b> 概率与分布模拟</a></li>
+<li class="chapter" data-level="5.5" data-path="正态分布.html"><a href="正态分布.html#实际分布与正态分布"><i class="fa fa-check"></i><b>5.5</b> 实际分布与正态分布</a></li>
+<li class="chapter" data-level="5.6" data-path="正态分布.html"><a href="正态分布.html#均值的抽样分布"><i class="fa fa-check"></i><b>5.6</b> 均值的抽样分布</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="正态分布.html"><a href="正态分布.html#均值的标准误"><i class="fa fa-check"></i><b>5.6.1</b> 均值的标准误</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="正态分布.html"><a href="正态分布.html#中心极限定理central-limit-theorem"><i class="fa fa-check"></i><b>5.7</b> 中心极限定理（Central Limit Theorem）</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="正态分布.html"><a href="正态分布.html#均值抽样标准误和中心极限定理"><i class="fa fa-check"></i><b>5.7.1</b> 均值抽样、标准误和中心极限定理</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R编程与心理统计</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="正态分布" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> 正态分布<a href="正态分布.html#正态分布" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="z分数" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Z分数<a href="正态分布.html#z分数" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>      
+Z分数被称为标准分数（Standard Score），它不与任何特定的测量单位关联，因此可以用于比较不同概率分布的数据。</p>
+<p>Z分数的计算公式为：</p>
+<p><span class="math inline">\(Z = \frac{X-\mu}{\sigma}\)</span></p>
+<p>      
+因此，知道了Z分数、平均值（<span class="math inline">\(\mu\)</span>）与标准差（<span class="math inline">\(\sigma\)</span>），就可以反推出原始分数：</p>
+<p><span class="math inline">\(X = z*\sigma + \mu\)</span></p>
+<div id="z分数的特性" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Z分数的特性<a href="正态分布.html#z分数的特性" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Z分数的平均值为0，证明如下：</p>
+<p>假设有一个数据集<span class="math inline">\(X_1, X_2, X_3\)</span>。</p>
+<p><span class="math inline">\(\mu = \frac{X_1+X_22+X_23}{3}\)</span></p>
+<p><span class="math inline">\(\sigma = \sqrt\frac{(X_1-\mu)^2+(X_2-\mu)^2+(X_3-\mu)^2}{3}\)</span></p>
+<p><span class="math inline">\(X_1的Z分数为：Z_1 = \frac{X_1-\mu}{\sigma}\)</span></p>
+<p><span class="math inline">\(X_2的Z分数为：Z_2 = \frac{X_2-\mu}{\sigma}\)</span></p>
+<p><span class="math inline">\(X_3的Z分数为：Z_3 = \frac{X_3-\mu}{\sigma}\)</span></p>
+<p>Z分数的平均值为：</p>
+<p><span class="math inline">\(\mu_Z = \frac{Z_1+Z_2+Z_3}{3} \\ \ \ \ \ \ = \frac{\frac{X_1-\mu}{\sigma}+\frac{X_2-\mu}{\sigma}+\frac{X_3-\mu}{\sigma}}{3} \\ \ \ \ \ \ = \frac{\frac{X_1+X_2+X_3-3\mu}{\sigma}}{3} \\ \ \ \ \ \ = \frac{\frac{3\mu-3\mu}{\sigma}}{3} \\ \ \ \ \ \ = 0\)</span></p>
+<p>Z分数的标准差为：</p>
+<p><span class="math inline">\(\sigma_Z = \sqrt\frac{(Z_1-\mu_Z)^2+(Z_2-\mu_Z)^2+(Z_3-\mu_Z)^2}{3} \\ \ \ \ \ \ = \sqrt\frac{(Z_1-0)^2+(Z_2-0)^2+(Z_3-0)^2}{3} \\ \ \ \ \ \ = \sqrt\frac{Z_1^2 + Z_2^2+Z_3^2}{3} \\ \ \ \ \ \ = \sqrt\frac{(\frac{X_1-\mu}{\sigma})^2(\frac{X_2-\mu}{\sigma})^2(\frac{X_3-\mu}{\sigma})^2}{3} \\ \ \ \ \ \ = \sqrt{\frac{\frac{(X_1-\mu)^2(X_2-\mu)^2(X_3-\mu)^2}{\sigma^2}}{3}} \\ \ \ \ \ \ = \sqrt{\frac{\frac{3\sigma^2}{\sigma^2}}{3}} \\ \ \ \ \ \ = \sqrt{\frac{3}{3}} \\ \ \ \ \ \ = 1\)</span></p>
+</div>
+<div id="z分数的缺陷" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Z分数的缺陷<a href="正态分布.html#z分数的缺陷" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Z分数的比较只有在两个分布的形态一致时才合理。</p>
+</div>
+<div id="计算z分数" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> 计算Z分数<a href="正态分布.html#计算z分数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="正态分布.html#cb1-1" tabindex="-1"></a><span class="co">#生成10个0到10之间的随机数,</span></span>
+<span id="cb1-2"><a href="正态分布.html#cb1-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-3"><a href="正态分布.html#cb1-3" tabindex="-1"></a>sample  <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>),<span class="dv">1</span>)</span>
+<span id="cb1-4"><a href="正态分布.html#cb1-4" tabindex="-1"></a>sample</span></code></pre></div>
+<pre><code>##  [1] 9.1 9.4 2.9 8.3 6.4 5.2 7.4 1.3 6.6 7.1</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="正态分布.html#cb3-1" tabindex="-1"></a><span class="co">#平均值</span></span>
+<span id="cb3-2"><a href="正态分布.html#cb3-2" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mean</span>(sample)</span>
+<span id="cb3-3"><a href="正态分布.html#cb3-3" tabindex="-1"></a>m</span></code></pre></div>
+<pre><code>## [1] 6.37</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="正态分布.html#cb5-1" tabindex="-1"></a><span class="co">#标准差</span></span>
+<span id="cb5-2"><a href="正态分布.html#cb5-2" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">sd</span>(sample)</span>
+<span id="cb5-3"><a href="正态分布.html#cb5-3" tabindex="-1"></a>s</span></code></pre></div>
+<pre><code>## [1] 2.605997</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="正态分布.html#cb7-1" tabindex="-1"></a><span class="co">#sample中的第1个数据</span></span>
+<span id="cb7-2"><a href="正态分布.html#cb7-2" tabindex="-1"></a>sample[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] 9.1</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="正态分布.html#cb9-1" tabindex="-1"></a><span class="co">#sample中第1个数值的Z分数</span></span>
+<span id="cb9-2"><a href="正态分布.html#cb9-2" tabindex="-1"></a>z1 <span class="ot">&lt;-</span> (sample[<span class="dv">1</span>]<span class="sc">-</span>m)<span class="sc">/</span>s</span>
+<span id="cb9-3"><a href="正态分布.html#cb9-3" tabindex="-1"></a>z1</span></code></pre></div>
+<pre><code>## [1] 1.047584</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="正态分布.html#cb11-1" tabindex="-1"></a><span class="co">#把sample中的所有数值转换成z分数</span></span>
+<span id="cb11-2"><a href="正态分布.html#cb11-2" tabindex="-1"></a>sample.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(sample)</span>
+<span id="cb11-3"><a href="正态分布.html#cb11-3" tabindex="-1"></a>sample.z</span></code></pre></div>
+<pre><code>##              [,1]
+##  [1,]  1.04758356
+##  [2,]  1.16270264
+##  [3,] -1.33154394
+##  [4,]  0.74059937
+##  [5,]  0.01151191
+##  [6,] -0.44896438
+##  [7,]  0.39524215
+##  [8,] -1.94551233
+##  [9,]  0.08825796
+## [10,]  0.28012308
+## attr(,&quot;scaled:center&quot;)
+## [1] 6.37
+## attr(,&quot;scaled:scale&quot;)
+## [1] 2.605997</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="正态分布.html#cb13-1" tabindex="-1"></a><span class="co">#Z分数的平均值</span></span>
+<span id="cb13-2"><a href="正态分布.html#cb13-2" tabindex="-1"></a><span class="fu">mean</span>(sample.z)</span></code></pre></div>
+<pre><code>## [1] -1.510836e-17</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="正态分布.html#cb15-1" tabindex="-1"></a><span class="co">#Z分数的标准差</span></span>
+<span id="cb15-2"><a href="正态分布.html#cb15-2" tabindex="-1"></a><span class="fu">sd</span>(sample.z)</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+</div>
+</div>
+<div id="正态分布normal-distribution" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> 正态分布（Normal Distribution）<a href="正态分布.html#正态分布normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>如果心理学家测量的所有变量都有相同的分布形态，那么不同的变量的同一个Z分数都将位于分布的相同位置，也就是说<b>不同的变量便可以通过Z分数进行比较</b>。</p>
+<p>在概率分布中，最为人知且具有最方便的数学特性的是正态分布，许多心理现象都符合正态分布，如人的智商、反应时等。事实上，正态分布可以看成一个概率分布的家族，它的成员之间的差异表现在两个方面：<b>平均值</b>和<b>标准差</b>。</p>
+<center>
+<img src="images/norm_dist.png" />
+</center>
+<center>
+图5.1 正态分布
+</center>
+</div>
+<div id="标准正态分布" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> 标准正态分布<a href="正态分布.html#标准正态分布" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>简单地说，标准正态分布就是正态分布的Z分数的概率分布。</p>
+<p>因此，任何正态分布都能通过Z分数转换成标准正态分布。</p>
+<p><span class="math inline">\(f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}\)</span></p>
+<p><span class="math inline">\(Z = \frac{x-\mu}{\sigma}\)</span></p>
+<p><span class="math inline">\(f(Z) = \frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}Z^2}\)</span></p>
+<p>把图5.1中的<span class="math inline">\(\sigma\)</span>去掉，就是Z分数的分布。</p>
+<center>
+<img src="images/stand_norm.png" />
+</center>
+<center>
+图5.2 标准正态分布
+</center>
+<p>标准正态分布只有一种情况，即<span class="math inline">\(N(0, 1)\)</span>，平均值为0，标准差为1的正态分布。其他正态分布都是标准正态分布的变形（见图5.3）。</p>
+<p>正态分布的两端是没有尽头的。</p>
+<center>
+<img src="images/norm.png" />
+</center>
+<center>
+图5.3 正态分布与标准正态分布
+</center>
+<p><br><br></p>
+</div>
+<div id="概率与分布模拟" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> 概率与分布模拟<a href="正态分布.html#概率与分布模拟" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe src="./normal/norm.html" title="概率与分布" height="450px" width="100%">
+</iframe>
+<p><em>引用自：<a href="https://homepage.divms.uiowa.edu/~mbognar/applets/normal.html">https://homepage.divms.uiowa.edu/~mbognar/applets/normal.html</a></em></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="正态分布.html#cb17-1" tabindex="-1"></a><span class="co">#求P(X &lt;= 110)</span></span>
+<span id="cb17-2"><a href="正态分布.html#cb17-2" tabindex="-1"></a>prob1 <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">110</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd=</span><span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-3"><a href="正态分布.html#cb17-3" tabindex="-1"></a>prob1</span></code></pre></div>
+<pre><code>## [1] 0.7475075</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="正态分布.html#cb19-1" tabindex="-1"></a><span class="co">#求P(X &gt;= 110)</span></span>
+<span id="cb19-2"><a href="正态分布.html#cb19-2" tabindex="-1"></a>prob2 <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">110</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd=</span><span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-3"><a href="正态分布.html#cb19-3" tabindex="-1"></a>prob2</span></code></pre></div>
+<pre><code>## [1] 0.2524925</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="正态分布.html#cb21-1" tabindex="-1"></a><span class="co">#或者等于</span></span>
+<span id="cb21-2"><a href="正态分布.html#cb21-2" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>prob1</span></code></pre></div>
+<pre><code>## [1] 0.2524925</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="正态分布.html#cb23-1" tabindex="-1"></a><span class="co">#求P(70 &lt;=X &lt;= 130)</span></span>
+<span id="cb23-2"><a href="正态分布.html#cb23-2" tabindex="-1"></a>prob3<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">130</span>, <span class="at">mean=</span><span class="dv">100</span>, <span class="at">sd=</span><span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-3"><a href="正态分布.html#cb23-3" tabindex="-1"></a>prob3<span class="fl">.1</span></span></code></pre></div>
+<pre><code>## [1] 0.9772499</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="正态分布.html#cb25-1" tabindex="-1"></a>prob3<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">70</span>, <span class="at">mean=</span><span class="dv">100</span>, <span class="at">sd=</span><span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-2"><a href="正态分布.html#cb25-2" tabindex="-1"></a>prob3<span class="fl">.2</span></span></code></pre></div>
+<pre><code>## [1] 0.02275013</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="正态分布.html#cb27-1" tabindex="-1"></a>prob3 <span class="ot">&lt;-</span> prob3<span class="fl">.1</span> <span class="sc">-</span> prob3<span class="fl">.2</span></span>
+<span id="cb27-2"><a href="正态分布.html#cb27-2" tabindex="-1"></a>prob3</span></code></pre></div>
+<pre><code>## [1] 0.9544997</code></pre>
+</div>
+<div id="实际分布与正态分布" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> 实际分布与正态分布<a href="正态分布.html#实际分布与正态分布" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>正态分布是一个完美的理论分布（根据数学理论构建的）。</li>
+<li>根据Z分数来推断事件发的概率是基于正态分布的。</li>
+<li>现实中，即使总体是无穷大的，心理学家研究的变量也不可能产生一个真正的正态分布（正态分布的两端是无限延伸的）。</li>
+<li>不满足正态分布的数据转换成Z分数之后，也不会更接近正态分布（Z分数是线性转换，不会改变分布形态）。</li>
+<li>实际中，数据只要满足近似正态分布即可（统计检验、看柱状图、看残差的分布）。</li>
+</ul>
+<center>
+<img src="images/dist_trans.png" />
+</center>
+<center>
+图5.4 原始分数与Z分数的分布
+</center>
+</div>
+<div id="均值的抽样分布" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> 均值的抽样分布<a href="正态分布.html#均值的抽样分布" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>如果我们研究咖啡对心率的影响，从人群中随机抽取25人，并测量其喝过咖啡后平均心率，此时的均值为：</p>
+<ul>
+<li><b style="color:#195C67">样本均值（sample mean，<span class="math inline">\(\bar{X}\)</span>）</b></li>
+</ul></li>
+<li><p>我们重复以上过程许多次，会得到的许多个样本均值，这些<b>样本均值</b>也会形成一个分布:</p>
+<ul>
+<li><b style="color:#195C67">抽样分布（sampling distribution），更准确地说叫做均值的抽样分布（sampling distribution of the mean）。</b></li>
+</ul></li>
+<li><p>当样本均值趋向无穷多个的话，其分布是一个正态分布。</p></li>
+</ul>
+<div id="均值的标准误" class="section level3 hasAnchor" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> 均值的标准误<a href="正态分布.html#均值的标准误" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>抽样时，样本量越大，其均值就越接近总体均值（或偏离总体均值的概率就越小）。</li>
+<li>总得来说，样本均值的变异不如总体中的个体变化那么大。</li>
+<li>因此，均值抽样分布的标准差将小于总体标准差。</li>
+<li>均值抽样分布的标准差被称为均值的标准误（standard error of the mean, <span class="math inline">\(\sigma_\bar{X}\)</span>）。</li>
+</ul>
+<p>均值标准误公式：</p>
+<p><b style="font-size:30px"> <span class="math inline">\(\sigma_\bar{X} = \frac{\sigma}{\sqrt{n}}\)</span> </b></p>
+<pre><code>*总体变异越大，样本变异越大*
+
+*样本量越大，样本变异越大*</code></pre>
+<center>
+<img src="images/mean_sampling.png" />
+</center>
+<center>
+图5.5 样本量与均值抽样分布
+</center>
+</div>
+</div>
+<div id="中心极限定理central-limit-theorem" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> 中心极限定理（Central Limit Theorem）<a href="正态分布.html#中心极限定理central-limit-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>严格说来，只有当总体分布是正态的，均值的抽样分布才会严格遵循正态分布。</p></li>
+<li><p>实际中，总体均不会完美呈现正态分布。</p></li>
+<li><p><b>中心极限定理：即使不遵循正态分布的总体，只要样本量足够大，则均值的抽样分布即可被认为是正态的。</b></p></li>
+<li><p>正是由于中心极限定理，心理学家不用太担心所研究的变量的总体分布形态，而且推理过程也大大简化了。</p>
+<p><strong>中心极限定理：</strong></p>
+<p><b style="color:#195C67"><em>对于任何一个均值为𝜇和一个有限方差为<span class="math inline">\(\sigma^2\)</span>的总体，当样本大小 n趋向无穷大时，样本均值（每一个样本均是n次独立观测）的分布将接近一个均值为𝜇和方差为<span class="math inline">\(\sigma^2/n\)</span>的正态分布。</em></b></p></li>
+</ul>
+<div id="均值抽样标准误和中心极限定理" class="section level3 hasAnchor" number="5.7.1">
+<h3><span class="header-section-number">5.7.1</span> 均值抽样、标准误和中心极限定理<a href="正态分布.html#均值抽样标准误和中心极限定理" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="正态分布.html#cb30-1" tabindex="-1"></a><span class="co">#均匀分布，生成一个N=10000的总体。</span></span>
+<span id="cb30-2"><a href="正态分布.html#cb30-2" tabindex="-1"></a>pop1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb30-3"><a href="正态分布.html#cb30-3" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="正态分布.html#cb30-4" tabindex="-1"></a><span class="co"># 总体的分布</span></span>
+<span id="cb30-5"><a href="正态分布.html#cb30-5" tabindex="-1"></a><span class="fu">hist</span>(pop1)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="正态分布.html#cb31-1" tabindex="-1"></a><span class="co">#正态分布，生成一个N=10000的总体，N(100, 15)</span></span>
+<span id="cb31-2"><a href="正态分布.html#cb31-2" tabindex="-1"></a>pop2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd=</span><span class="dv">15</span>)</span>
+<span id="cb31-3"><a href="正态分布.html#cb31-3" tabindex="-1"></a><span class="fu">hist</span>(pop2)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="正态分布.html#cb32-1" tabindex="-1"></a><span class="co">#从总体中无放回地抽取一个n=9的样本</span></span>
+<span id="cb32-2"><a href="正态分布.html#cb32-2" tabindex="-1"></a>sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(pop1, <span class="dv">9</span>, <span class="at">replace=</span>F) </span>
+<span id="cb32-3"><a href="正态分布.html#cb32-3" tabindex="-1"></a>sample</span></code></pre></div>
+<pre><code>## [1] 3.7904543 6.6452962 2.5548023 0.8009692 7.1677773 4.3767272 8.4932047
+## [8] 7.0390221 5.7347590</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="正态分布.html#cb34-1" tabindex="-1"></a><span class="co">#从总体中抽取1000次样本量为n的样本</span></span>
+<span id="cb34-2"><a href="正态分布.html#cb34-2" tabindex="-1"></a>sample.m <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb34-3"><a href="正态分布.html#cb34-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb34-4"><a href="正态分布.html#cb34-4" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
+<span id="cb34-5"><a href="正态分布.html#cb34-5" tabindex="-1"></a>  sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(pop1, <span class="dv">9</span>, <span class="at">replace=</span>F) </span>
+<span id="cb34-6"><a href="正态分布.html#cb34-6" tabindex="-1"></a>  sample.m <span class="ot">&lt;-</span> <span class="fu">c</span>(sample.m, <span class="fu">mean</span>(sample))</span>
+<span id="cb34-7"><a href="正态分布.html#cb34-7" tabindex="-1"></a>}</span>
+<span id="cb34-8"><a href="正态分布.html#cb34-8" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="正态分布.html#cb34-9" tabindex="-1"></a><span class="co">#画均值的抽样分布（根据中心极限定理，接近正态分布）</span></span>
+<span id="cb34-10"><a href="正态分布.html#cb34-10" tabindex="-1"></a><span class="fu">hist</span>(sample.m)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="认识数据.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-norm_dist.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

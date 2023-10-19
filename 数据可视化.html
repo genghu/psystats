@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 数据可视化 | R编程与心理统计</title>
+  <meta name="description" content="本书是一本关于如何使用R语言进行心理学数据分析的工具书，适合作为本科生、研究生学习R语言进行统计分析的教材，以及心理学的研究者作为数据分析参考书。" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 数据可视化 | R编程与心理统计" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="本书是一本关于如何使用R语言进行心理学数据分析的工具书，适合作为本科生、研究生学习R语言进行统计分析的教材，以及心理学的研究者作为数据分析参考书。" />
+  <meta name="github-repo" content="rstudio/rpaps" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 数据可视化 | R编程与心理统计" />
+  
+  <meta name="twitter:description" content="本书是一本关于如何使用R语言进行心理学数据分析的工具书，适合作为本科生、研究生学习R语言进行统计分析的教材，以及心理学的研究者作为数据分析参考书。" />
+  
+
+<meta name="author" content="史更虎" />
+
+
+<meta name="date" content="2023-09-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r的数据类型和相关计算.html"/>
+<link rel="next" href="认识数据.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R编程与心理统计</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> R编程环境的搭建</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#r是啥"><i class="fa fa-check"></i><b>1.1</b> R是啥？</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r编程环境r语言在哪儿写程序"><i class="fa fa-check"></i><b>1.2</b> R编程环境：R语言在哪儿写程序？</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#第一步先装上r"><i class="fa fa-check"></i><b>1.2.1</b> 第一步：先装上R</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#rgui都可以干啥"><i class="fa fa-check"></i><b>1.2.2</b> RGUI都可以干啥？</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#更好的选择rstudio"><i class="fa fa-check"></i><b>1.2.3</b> 更好的选择：RStudio</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#还有其他的r的开发环境吗"><i class="fa fa-check"></i><b>1.2.4</b> 还有其他的R的开发环境吗？</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html"><i class="fa fa-check"></i><b>2</b> R的数据类型和相关计算</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#基本数据类型"><i class="fa fa-check"></i><b>2.1</b> 基本数据类型</a></li>
+<li class="chapter" data-level="2.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#变量variables"><i class="fa fa-check"></i><b>2.2</b> 变量（Variables）</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#变量的赋值"><i class="fa fa-check"></i><b>2.2.1</b> 变量的赋值</a></li>
+<li class="chapter" data-level="2.2.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#变量命名如何给变量取名字"><i class="fa fa-check"></i><b>2.2.2</b> 变量命名：如何给变量取名字</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#算术运算"><i class="fa fa-check"></i><b>2.3</b> 算术运算</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#变量在算术运算中的使用"><i class="fa fa-check"></i><b>2.3.1</b> 变量在算术运算中的使用</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#逻辑表达式和逻辑运算"><i class="fa fa-check"></i><b>2.4</b> 逻辑表达式和逻辑运算</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#逻辑表达式的应用"><i class="fa fa-check"></i><b>2.4.1</b> 逻辑表达式的应用</a></li>
+<li class="chapter" data-level="2.4.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#和"><i class="fa fa-check"></i><b>2.4.2</b> &amp;&amp;和||</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#向量vector"><i class="fa fa-check"></i><b>2.5</b> 向量（Vector）</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#向量是什么"><i class="fa fa-check"></i><b>2.5.1</b> 向量是什么？</a></li>
+<li class="chapter" data-level="2.5.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#r的向量"><i class="fa fa-check"></i><b>2.5.2</b> R的向量</a></li>
+<li class="chapter" data-level="2.5.3" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#通过下标访问向量中的元素"><i class="fa fa-check"></i><b>2.5.3</b> 通过下标访问向量中的元素</a></li>
+<li class="chapter" data-level="2.5.4" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#向量的运算"><i class="fa fa-check"></i><b>2.5.4</b> 向量的运算</a></li>
+<li class="chapter" data-level="2.5.5" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#向量函数function"><i class="fa fa-check"></i><b>2.5.5</b> 向量函数（function）</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#数组与矩阵"><i class="fa fa-check"></i><b>2.6</b> 数组与矩阵</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#数组array"><i class="fa fa-check"></i><b>2.6.1</b> 数组（array）</a></li>
+<li class="chapter" data-level="2.6.2" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#矩阵matrix"><i class="fa fa-check"></i><b>2.6.2</b> 矩阵(Matrix)</a></li>
+<li class="chapter" data-level="2.6.3" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#矩阵运算"><i class="fa fa-check"></i><b>2.6.3</b> 矩阵运算</a></li>
+<li class="chapter" data-level="2.6.4" data-path="r的数据类型和相关计算.html"><a href="r的数据类型和相关计算.html#矩阵函数"><i class="fa fa-check"></i><b>2.6.4</b> 矩阵函数</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="数据可视化.html"><a href="数据可视化.html"><i class="fa fa-check"></i><b>3</b> 数据可视化</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="数据可视化.html"><a href="数据可视化.html#饼状图"><i class="fa fa-check"></i><b>3.1</b> 饼状图</a></li>
+<li class="chapter" data-level="3.2" data-path="数据可视化.html"><a href="数据可视化.html#条形图bar-chart"><i class="fa fa-check"></i><b>3.2</b> 条形图（bar chart）</a></li>
+<li class="chapter" data-level="3.3" data-path="数据可视化.html"><a href="数据可视化.html#柱状图histogram"><i class="fa fa-check"></i><b>3.3</b> 柱状图（histogram）</a></li>
+<li class="chapter" data-level="3.4" data-path="数据可视化.html"><a href="数据可视化.html#箱形图"><i class="fa fa-check"></i><b>3.4</b> 箱形图</a></li>
+<li class="chapter" data-level="3.5" data-path="数据可视化.html"><a href="数据可视化.html#线形图"><i class="fa fa-check"></i><b>3.5</b> 线形图</a></li>
+<li class="chapter" data-level="3.6" data-path="数据可视化.html"><a href="数据可视化.html#散点图"><i class="fa fa-check"></i><b>3.6</b> 散点图</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="认识数据.html"><a href="认识数据.html"><i class="fa fa-check"></i><b>4</b> 认识数据</a></li>
+<li class="chapter" data-level="5" data-path="正态分布.html"><a href="正态分布.html"><i class="fa fa-check"></i><b>5</b> 正态分布</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="正态分布.html"><a href="正态分布.html#z分数"><i class="fa fa-check"></i><b>5.1</b> Z分数</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="正态分布.html"><a href="正态分布.html#z分数的特性"><i class="fa fa-check"></i><b>5.1.1</b> Z分数的特性</a></li>
+<li class="chapter" data-level="5.1.2" data-path="正态分布.html"><a href="正态分布.html#z分数的缺陷"><i class="fa fa-check"></i><b>5.1.2</b> Z分数的缺陷</a></li>
+<li class="chapter" data-level="5.1.3" data-path="正态分布.html"><a href="正态分布.html#计算z分数"><i class="fa fa-check"></i><b>5.1.3</b> 计算Z分数</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="正态分布.html"><a href="正态分布.html#正态分布normal-distribution"><i class="fa fa-check"></i><b>5.2</b> 正态分布（Normal Distribution）</a></li>
+<li class="chapter" data-level="5.3" data-path="正态分布.html"><a href="正态分布.html#标准正态分布"><i class="fa fa-check"></i><b>5.3</b> 标准正态分布</a></li>
+<li class="chapter" data-level="5.4" data-path="正态分布.html"><a href="正态分布.html#概率与分布模拟"><i class="fa fa-check"></i><b>5.4</b> 概率与分布模拟</a></li>
+<li class="chapter" data-level="5.5" data-path="正态分布.html"><a href="正态分布.html#实际分布与正态分布"><i class="fa fa-check"></i><b>5.5</b> 实际分布与正态分布</a></li>
+<li class="chapter" data-level="5.6" data-path="正态分布.html"><a href="正态分布.html#均值的抽样分布"><i class="fa fa-check"></i><b>5.6</b> 均值的抽样分布</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="正态分布.html"><a href="正态分布.html#均值的标准误"><i class="fa fa-check"></i><b>5.6.1</b> 均值的标准误</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="正态分布.html"><a href="正态分布.html#中心极限定理central-limit-theorem"><i class="fa fa-check"></i><b>5.7</b> 中心极限定理（Central Limit Theorem）</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="正态分布.html"><a href="正态分布.html#均值抽样标准误和中心极限定理"><i class="fa fa-check"></i><b>5.7.1</b> 均值抽样、标准误和中心极限定理</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R编程与心理统计</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="数据可视化" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> 数据可视化<a href="数据可视化.html#数据可视化" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="饼状图" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> 饼状图<a href="数据可视化.html#饼状图" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>      
+饼状图是一个将圆形划分为几个扇形的统计图表，用于描述数量之间的比例关系。在饼图中，每个扇区的弧长大小为其所表示的数量比例。饼形图很少用于科技文献，但是商业领域和大众媒体中的宠儿。</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="数据可视化.html#cb242-1" tabindex="-1"></a><span class="co">#这句代码可以使R打印出中文</span></span>
+<span id="cb242-2"><a href="数据可视化.html#cb242-2" tabindex="-1"></a><span class="fu">Sys.setlocale</span>(<span class="st">&quot;LC_ALL&quot;</span>,<span class="st">&quot;Chinese&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;LC_COLLATE=Chinese_China.936;LC_CTYPE=Chinese_China.936;LC_MONETARY=Chinese_China.936;LC_NUMERIC=C;LC_TIME=Chinese_China.936&quot;</code></pre>
+<p>      
+假如大学里一个班一共60位同学，他们在选修体育课， 15人选择了游泳，20人选择了武术，5个人选修了足球，8个人选修了乒乓球，12个人选修了篮球。我们怎么用饼状图来表示这组数据呢？</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="数据可视化.html#cb244-1" tabindex="-1"></a><span class="co"># 数据放在一个向量中。</span></span>
+<span id="cb244-2"><a href="数据可视化.html#cb244-2" tabindex="-1"></a>pe_slices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">12</span>)</span>
+<span id="cb244-3"><a href="数据可视化.html#cb244-3" tabindex="-1"></a><span class="co">#体育课的名称也放入一个向量中</span></span>
+<span id="cb244-4"><a href="数据可视化.html#cb244-4" tabindex="-1"></a>lbls <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;游泳&quot;</span>, <span class="st">&quot;武术&quot;</span>, <span class="st">&quot;足球&quot;</span>, <span class="st">&quot;乒乓球&quot;</span>, <span class="st">&quot;篮球&quot;</span>)</span>
+<span id="cb244-5"><a href="数据可视化.html#cb244-5" tabindex="-1"></a><span class="co">#计算选修每个体育课的人数占班级总人数的百分比</span></span>
+<span id="cb244-6"><a href="数据可视化.html#cb244-6" tabindex="-1"></a>pct <span class="ot">&lt;-</span> <span class="fu">round</span>(pe_slices<span class="sc">/</span><span class="fu">sum</span>(pe_slices)<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb244-7"><a href="数据可视化.html#cb244-7" tabindex="-1"></a></span>
+<span id="cb244-8"><a href="数据可视化.html#cb244-8" tabindex="-1"></a><span class="co">#把体育课的名称和选修该课的人数占比合成一个字符串</span></span>
+<span id="cb244-9"><a href="数据可视化.html#cb244-9" tabindex="-1"></a>lbls <span class="ot">&lt;-</span> <span class="fu">paste</span>(lbls, pct) </span>
+<span id="cb244-10"><a href="数据可视化.html#cb244-10" tabindex="-1"></a><span class="co">#再给体育课名称和选修该课的人数占比字符串后边加一个百分号</span></span>
+<span id="cb244-11"><a href="数据可视化.html#cb244-11" tabindex="-1"></a>lbls <span class="ot">&lt;-</span> <span class="fu">paste</span>(lbls,<span class="st">&quot;%&quot;</span>,<span class="at">sep=</span><span class="st">&quot;&quot;</span>) </span>
+<span id="cb244-12"><a href="数据可视化.html#cb244-12" tabindex="-1"></a><span class="co">#使用函数pie画出饼状图</span></span>
+<span id="cb244-13"><a href="数据可视化.html#cb244-13" tabindex="-1"></a><span class="fu">pie</span>(pe_slices,<span class="at">labels =</span> lbls, <span class="at">col=</span><span class="fu">rainbow</span>(<span class="fu">length</span>(lbls)),</span>
+<span id="cb244-14"><a href="数据可视化.html#cb244-14" tabindex="-1"></a>   <span class="at">main=</span><span class="st">&quot;体育选修课&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+</div>
+<div id="条形图bar-chart" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> 条形图（bar chart）<a href="数据可视化.html#条形图bar-chart" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="数据可视化.html#cb245-1" tabindex="-1"></a>colors <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;brown&quot;</span>)</span>
+<span id="cb245-2"><a href="数据可视化.html#cb245-2" tabindex="-1"></a>months <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mar&quot;</span>, <span class="st">&quot;Apr&quot;</span>, <span class="st">&quot;May&quot;</span>, <span class="st">&quot;Jun&quot;</span>, <span class="st">&quot;Jul&quot;</span>)</span>
+<span id="cb245-3"><a href="数据可视化.html#cb245-3" tabindex="-1"></a>regions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;East&quot;</span>, <span class="st">&quot;West&quot;</span>, <span class="st">&quot;North&quot;</span>)</span>
+<span id="cb245-4"><a href="数据可视化.html#cb245-4" tabindex="-1"></a><span class="co"># Create the matrix of the values.</span></span>
+<span id="cb245-5"><a href="数据可视化.html#cb245-5" tabindex="-1"></a>Values <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">11</span>, <span class="dv">9</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">11</span>),<span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb245-6"><a href="数据可视化.html#cb245-6" tabindex="-1"></a></span>
+<span id="cb245-7"><a href="数据可视化.html#cb245-7" tabindex="-1"></a><span class="co"># Create the bar chart</span></span>
+<span id="cb245-8"><a href="数据可视化.html#cb245-8" tabindex="-1"></a><span class="fu">barplot</span>(Values, <span class="at">main =</span> <span class="st">&quot;Total Revenue&quot;</span>, <span class="at">names.arg =</span> months, <span class="at">xlab =</span> <span class="st">&quot;Month&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Revenue&quot;</span>,<span class="at">col =</span> colors, <span class="at">beside =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="数据可视化.html#cb246-1" tabindex="-1"></a><span class="fu">barplot</span>(Values, <span class="at">main =</span> <span class="st">&quot;Total Revenue&quot;</span>, <span class="at">names.arg =</span> months, <span class="at">xlab =</span> <span class="st">&quot;Month&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Revenue&quot;</span>, <span class="at">col =</span> colors)</span>
+<span id="cb246-2"><a href="数据可视化.html#cb246-2" tabindex="-1"></a><span class="co"># Add the legend to the chart</span></span>
+<span id="cb246-3"><a href="数据可视化.html#cb246-3" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, regions, <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> colors)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-94-2.png" width="672" /></p>
+</div>
+<div id="柱状图histogram" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> 柱状图（histogram）<a href="数据可视化.html#柱状图histogram" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="数据可视化.html#cb247-1" tabindex="-1"></a><span class="co"># Create data for the graph.</span></span>
+<span id="cb247-2"><a href="数据可视化.html#cb247-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">19</span>, <span class="dv">23</span>, <span class="dv">11</span>, <span class="dv">5</span>, <span class="dv">16</span>, <span class="dv">21</span>, <span class="dv">32</span>, <span class="dv">14</span>, <span class="dv">19</span>, <span class="dv">27</span>, <span class="dv">39</span>)</span>
+<span id="cb247-3"><a href="数据可视化.html#cb247-3" tabindex="-1"></a></span>
+<span id="cb247-4"><a href="数据可视化.html#cb247-4" tabindex="-1"></a><span class="co"># Create the histogram.</span></span>
+<span id="cb247-5"><a href="数据可视化.html#cb247-5" tabindex="-1"></a><span class="fu">hist</span>(v, <span class="at">xlab =</span> <span class="st">&quot;No.of Articles&quot;</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb247-6"><a href="数据可视化.html#cb247-6" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;black&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>),</span>
+<span id="cb247-7"><a href="数据可视化.html#cb247-7" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">breaks =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="数据可视化.html#cb248-1" tabindex="-1"></a><span class="co"># Creating data for the graph.</span></span>
+<span id="cb248-2"><a href="数据可视化.html#cb248-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">19</span>, <span class="dv">23</span>, <span class="dv">11</span>, <span class="dv">5</span>, <span class="dv">16</span>, <span class="dv">21</span>, <span class="dv">32</span>, <span class="dv">14</span>, <span class="dv">19</span>,</span>
+<span id="cb248-3"><a href="数据可视化.html#cb248-3" tabindex="-1"></a>       <span class="dv">27</span>, <span class="dv">39</span>, <span class="dv">120</span>, <span class="dv">40</span>, <span class="dv">70</span>, <span class="dv">90</span>)</span>
+<span id="cb248-4"><a href="数据可视化.html#cb248-4" tabindex="-1"></a></span>
+<span id="cb248-5"><a href="数据可视化.html#cb248-5" tabindex="-1"></a><span class="co"># Creating the histogram.</span></span>
+<span id="cb248-6"><a href="数据可视化.html#cb248-6" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="fu">hist</span>(v, <span class="at">xlab =</span> <span class="st">&quot;Weight&quot;</span>, <span class="at">ylab =</span><span class="st">&quot;Frequency&quot;</span>,</span>
+<span id="cb248-7"><a href="数据可视化.html#cb248-7" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">&quot;darkmagenta&quot;</span>, <span class="at">border =</span> <span class="st">&quot;pink&quot;</span>,</span>
+<span id="cb248-8"><a href="数据可视化.html#cb248-8" tabindex="-1"></a>        <span class="at">breaks =</span> <span class="dv">5</span>)</span>
+<span id="cb248-9"><a href="数据可视化.html#cb248-9" tabindex="-1"></a> </span>
+<span id="cb248-10"><a href="数据可视化.html#cb248-10" tabindex="-1"></a><span class="co"># Setting labels</span></span>
+<span id="cb248-11"><a href="数据可视化.html#cb248-11" tabindex="-1"></a><span class="fu">text</span>(m<span class="sc">$</span>mids, m<span class="sc">$</span>counts, <span class="at">labels =</span> m<span class="sc">$</span>counts,</span>
+<span id="cb248-12"><a href="数据可视化.html#cb248-12" tabindex="-1"></a>    <span class="at">adj =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-95-2.png" width="672" /></p>
+</div>
+<div id="箱形图" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> 箱形图<a href="数据可视化.html#箱形图" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="数据可视化.html#cb249-1" tabindex="-1"></a>input <span class="ot">&lt;-</span> mtcars[, <span class="fu">c</span>(<span class="st">&#39;mpg&#39;</span>, <span class="st">&#39;cyl&#39;</span>)]</span>
+<span id="cb249-2"><a href="数据可视化.html#cb249-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(input))</span></code></pre></div>
+<pre><code>##                    mpg cyl
+## Mazda RX4         21.0   6
+## Mazda RX4 Wag     21.0   6
+## Datsun 710        22.8   4
+## Hornet 4 Drive    21.4   6
+## Hornet Sportabout 18.7   8
+## Valiant           18.1   6</code></pre>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="数据可视化.html#cb251-1" tabindex="-1"></a><span class="co"># Plot the chart.</span></span>
+<span id="cb251-2"><a href="数据可视化.html#cb251-2" tabindex="-1"></a><span class="fu">boxplot</span>(mpg <span class="sc">~</span> cyl, <span class="at">data =</span> mtcars,</span>
+<span id="cb251-3"><a href="数据可视化.html#cb251-3" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;Number of Cylinders&quot;</span>,</span>
+<span id="cb251-4"><a href="数据可视化.html#cb251-4" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Miles Per Gallon&quot;</span>,</span>
+<span id="cb251-5"><a href="数据可视化.html#cb251-5" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Mileage Data&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
+</div>
+<div id="线形图" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> 线形图<a href="数据可视化.html#线形图" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="数据可视化.html#cb252-1" tabindex="-1"></a><span class="co"># Create the data for the chart.</span></span>
+<span id="cb252-2"><a href="数据可视化.html#cb252-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">17</span>, <span class="dv">25</span>, <span class="dv">38</span>, <span class="dv">13</span>, <span class="dv">41</span>)</span>
+<span id="cb252-3"><a href="数据可视化.html#cb252-3" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">19</span>, <span class="dv">36</span>, <span class="dv">19</span>, <span class="dv">23</span>)</span>
+<span id="cb252-4"><a href="数据可视化.html#cb252-4" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">14</span>, <span class="dv">16</span>, <span class="dv">34</span>, <span class="dv">29</span>)</span>
+<span id="cb252-5"><a href="数据可视化.html#cb252-5" tabindex="-1"></a> </span>
+<span id="cb252-6"><a href="数据可视化.html#cb252-6" tabindex="-1"></a><span class="co"># Plot the bar chart.</span></span>
+<span id="cb252-7"><a href="数据可视化.html#cb252-7" tabindex="-1"></a><span class="fu">plot</span>(v, <span class="at">type =</span> <span class="st">&quot;o&quot;</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb252-8"><a href="数据可视化.html#cb252-8" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Month&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Article Written &quot;</span>,</span>
+<span id="cb252-9"><a href="数据可视化.html#cb252-9" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;Article Written chart&quot;</span>)</span>
+<span id="cb252-10"><a href="数据可视化.html#cb252-10" tabindex="-1"></a> </span>
+<span id="cb252-11"><a href="数据可视化.html#cb252-11" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="at">type =</span> <span class="st">&quot;o&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb252-12"><a href="数据可视化.html#cb252-12" tabindex="-1"></a><span class="fu">lines</span>(m, <span class="at">type =</span> <span class="st">&quot;o&quot;</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
+</div>
+<div id="散点图" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> 散点图<a href="数据可视化.html#散点图" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="数据可视化.html#cb253-1" tabindex="-1"></a><span class="co"># Plot the chart for cars with</span></span>
+<span id="cb253-2"><a href="数据可视化.html#cb253-2" tabindex="-1"></a><span class="co"># weight between 1.5 to 4 and</span></span>
+<span id="cb253-3"><a href="数据可视化.html#cb253-3" tabindex="-1"></a><span class="co"># mileage between 10 and 25.</span></span>
+<span id="cb253-4"><a href="数据可视化.html#cb253-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> mtcars<span class="sc">$</span>wt, <span class="at">y =</span> mtcars<span class="sc">$</span>mpg,</span>
+<span id="cb253-5"><a href="数据可视化.html#cb253-5" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Weight&quot;</span>,</span>
+<span id="cb253-6"><a href="数据可视化.html#cb253-6" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Milage&quot;</span>,</span>
+<span id="cb253-7"><a href="数据可视化.html#cb253-7" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">1.5</span>, <span class="dv">4</span>),</span>
+<span id="cb253-8"><a href="数据可视化.html#cb253-8" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),       </span>
+<span id="cb253-9"><a href="数据可视化.html#cb253-9" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;Weight vs Milage&quot;</span></span>
+<span id="cb253-10"><a href="数据可视化.html#cb253-10" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r的数据类型和相关计算.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="认识数据.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-datavisulization.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
